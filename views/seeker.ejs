@@ -2,11 +2,301 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Job Seeker Dashboard - Job Listings</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-header {
+            background-color: #333;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+        }
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        .dashboard-links .card {
+            background-color: #fff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .dashboard-links .card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        .dashboard-links .card h2 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .dashboard-links .card p {
+            font-size: 16px;
+            margin: 0;
+            margin-top: 20px;
+            color: #666;
+        }
+        .job-listings table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .job-listings th,
+        .job-listings td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .job-listings th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            color: #333;
+        }
+        .job-listings td.actions {
+            text-align: center;
+        }
+        .job-listings .btn {
+            margin-right: 5px;
+        }
+        .job-listings .btn:last-child {
+            margin-right: 0;
+        }
+        .applications table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .applications th,
+        .applications td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .applications th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            color: #333;
+        }
+        .applications td.actions {
+            text-align: center;
+        }
+        .applications .btn {
+            margin-right: 5px;
+        }
+        .applications .btn:last-child {
+            margin-right: 0;
+        }
+        .settings form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .settings form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        .settings form input[type="text"],
+        .settings form input[type="email"],
+        .settings form select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .settings form select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'><path d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z'/></svg>");
+            background-size: 10px;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        .settings form button[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .settings form button[type="submit"]:hover {
+            background-color: #222;
+        }
+    </style>
 </head>
 <body>
-    
+<header class="dashboard-header">
+    <h1>Job Seeker Dashboard</h1>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-links">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>My Profile</h2>
+                        <p>View and edit your job seeker profile.</p>
+                        <a href="#" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Job Listings</h2>
+                        <p>View and apply to job listings.</p>
+                        <a href="#" class="btn btn-primary">View Listings</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Applications</h2>
+                        <p>View the status of your job applications.</p>
+                        <a href="#" class="btn btn-primary">View Applications</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="job-listings">
+                <h2>Job Listings</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Web Developer</td>
+                        <td>ABC Company</td>
+                        <td>San Francisco, CA</td>
+                        <td class="actions">
+                            <a href="#" class="btn btn-primary">Apply</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Graphic Designer</td>
+                        <td>XYZ Agency</td>
+                        <td>New York, NY</td>
+                        <td class="actions">
+                            <a href="#" class="btn btn-primary">Apply</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="applications">
+                <h2>Applications</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Web Developer</td>
+                        <td>ABC Company</td>
+                        <td>Pending</td>
+                        <td class="actions">
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a href="#" class="btn btn-danger">Withdraw</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Graphic Designer</td>
+                        <td>XYZ Agency</td>
+                        <td>Rejected</td>
+                        <td class="actions">
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="settings">
+                <h2>Settings</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="johndoe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <select id="location" name="location">
+                            <option value="san-francisco">San Francisco</option>
+                            <option value="new-york">New York</option>
+                            <option value="los-angeles">Los Angeles</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get job listings table
+    const jobListingsTable = document.querySelector('.job-listings table');
+
+    // Attach event listener to apply buttons
+    jobListingsTable.addEventListener('click', (event) => {
+        if (event.target.classList.contains('btn-primary')) {
+            event.preventDefault();
+            alert('You have applied to this job!');
+        }
+    });
+
+    // Get applications table
+    const applicationsTable = document.querySelector('.applications table');
+
+    // Attach event listener to withdraw buttons
+    applicationsTable.addEventListener('click', (event) => {
+        if (event.target.classList.contains('btn-danger')) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to withdraw your application?')) {
+                event.target.closest('tr').remove();
+                alert('Your application has been withdrawn.');
+            }
+        }
+    });
+
+    // Get settings form
+    const settingsForm = document.querySelector('.settings form');
+
+    // Attach event listener to submit button
+    settingsForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const nameInput = settingsForm.querySelector('#name');
+        const emailInput = settingsForm.querySelector('#email');
+        const locationInput = settingsForm.querySelector('#location');
+        alert(`Your name is ${nameInput.value}, your email is ${emailInput.value}, and your location is ${locationInput.value}.`);
+    });
+</script>
 </body>
 </html>
