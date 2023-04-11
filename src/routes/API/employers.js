@@ -1,21 +1,29 @@
 const express = require("express");
+const Employers = require("../../models/employers");
 const employersAPIRouter = express.Router();
-// const { query_runner, query_error } = require("../../../helpers/mysql_helpers");
 
 employersAPIRouter.get("/", (req, res) => {
-    res.send("This is the employers API.");
+  Employers.findAll()
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(500).json(err.message));
 });
 
 employersAPIRouter.post("/", (req, res) => {
-    res.send("Employer Added Successfully!");
+  Employers.create({ ...req.body })
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(500).json(err.message));
 });
 
-employersAPIRouter.patch("/", (req, res) => {
-    res.send("Employer info updated successfullly!");
+employersAPIRouter.patch("/:id", (req, res) => {
+  Employers.update({ ...req.body }, { where: { id: req.params.id } })
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(500).json(err));
 });
 
 employersAPIRouter.delete("/:id", (req, res) => {
-    res.send("Successflly Deleted!");
+  Employers.destroy({ where: { id: req.params.id } })
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(500).json(err));
 });
 
 module.exports = employersAPIRouter;
