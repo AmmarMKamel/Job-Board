@@ -11,12 +11,14 @@ const JobDetailsRoute = require("./src/routes/job");
 const EmployerRoute = require("./src/routes/employerDashboard");
 const SeekerRoute = require("./src/routes/seekerDashboard");
 const APIRouter = require("./src/routes/API/main");
+const {HandleDBModel} = require("./src/helpers/HandleDBModel");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(HandleDBModel);
 app.use(multer().array());
 app.use("/api", APIRouter);
 app.use("/register", RegisterRoute);
