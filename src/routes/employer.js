@@ -1,9 +1,13 @@
 const express = require("express");
 const EmployerRoute = express.Router();
-// const { query_runner, query_error } = require("../helpers/mysql_helpers");
-
-EmployerRoute.get("/", (req, res) => {
+EmployerRoute.get("/:id", (req, res) => {
   res.status(200).render("employer");
 });
+
+EmployerRoute.post("/");
+
+EmployerRoute.patch("/");
+
+EmployerRoute.delete("/");
 
 module.exports = EmployerRoute;

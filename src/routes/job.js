@@ -1,9 +1,10 @@
 const express = require("express");
-const JobDetailsRoute = express.Router();
-// const { query_runner, query_error } = require("../helpers/mysql_helpers");
+const JobRoute = express.Router();
+const Job = require("../models/Job");
 
-JobDetailsRoute.get("/", (req, res) => {
-  res.status(200).render("job-details");
+JobRoute.get("/:id", async (req, res) => {
+  const job = await Job.findByPk(req.params.id);
+  res.status(200).render("job-details", { job });
 });
 
-module.exports = JobDetailsRoute;
+module.exports = JobRoute;
