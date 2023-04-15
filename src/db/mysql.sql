@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS seekers (
 
 CREATE TABLE IF NOT EXISTS job_apps (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    job_id NOT NULL INT,
+    job_id NOT NULL INT UNIQUE,
     applicant_id NOT NULL INT,
     FOREIGN KEY (job_id) REFERENCES jobs(id),
     FOREIGN KEY (applicant_id) REFERENCES seekers(id)

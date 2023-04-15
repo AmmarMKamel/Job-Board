@@ -7,17 +7,18 @@ const JobApplication = sequelize.define(
   "job_apps",
   {
     id: {
-      types: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: true,
     },
     job_id: {
-      id: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
     },
     applicant_id: {
-      id: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

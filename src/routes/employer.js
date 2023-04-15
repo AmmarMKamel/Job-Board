@@ -1,9 +1,11 @@
 const express = require("express");
 const EmployerRoute = express.Router();
 const Employer = require("../models/Employer");
+const Job = require("../models/Job");
 EmployerRoute.get("/:id", async (req, res) => {
   const employer = await Employer.findByPk(req.params.id);
-  res.status(200).render("employer", { employer });
+  const jobs = await Job.findAll({ where: { employer_id: employer.id } });
+  res.status(200).render("employer", { employer, jobs });
 });
 
 // Edit employer's account
@@ -24,6 +26,20 @@ EmployerRoute.delete("/:id", async (req, res) => {
   employer
     .destroy()
     .then(() => res.status(200).redirect("/"))
+    .catch((err) => res.status(500).json(err.message));
+});
+
+// Edit employer's info
+EmployerRoute.post("/edit/:id", (req, res) => {
+  Employer.update(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    },
+    { where: { id: req.params.id } }
+  )
+    .then(() => res.status(200).redirect(`/employer/${req.params.id}`))
     .catch((err) => res.status(500).json(err.message));
 });
 
