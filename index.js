@@ -1,46 +1,67 @@
+// Import needed modules
 const express = require("express");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
 
-// Import the route here
+// Pages routes
 const RegisterRoute = require("./src/routes/register");
 const LoginRoute = require("./src/routes/login");
 const JobListingsRoute = require("./src/routes/jobListings");
-const JobDetailsRoute = require("./src/routes/job");
-const EmployerRoute = require("./src/routes/employerDashboard");
-const SeekerRoute = require("./src/routes/seekerDashboard");
-const APIRouter = require("./src/routes/API/main");
-const {HandleDBModel} = require("./src/helpers/HandleDBModel");
+const JobRoute = require("./src/routes/job");
+const EmployerRoute = require("./src/routes/employer");
+const SeekerRoute = require("./src/routes/seeker");
+const Job = require("./src/models/Job");
 
+// API route
+const APIRouter = require("./src/routes/API/main");
+
+// Importing DB model middleware function
+const { HandleDBModel } = require("./src/helpers/HandleDBModel");
+
+// Initializing express
 const app = express();
 const port = process.env.PORT || 3000;
 
+// EJS
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Setting the public folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(HandleDBModel);
 app.use(multer().array());
+
+// Routes
 app.use("/api", APIRouter);
 app.use("/register", RegisterRoute);
 app.use("/login", LoginRoute);
-app.use("/job-details", JobDetailsRoute);
-app.use("/job-listings", JobListingsRoute);
+app.use("/job", JobRoute);
+app.use("/jobs", JobListingsRoute);
 app.use("/employer", EmployerRoute);
 app.use("/seeker", SeekerRoute);
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/", (req, res) => {
-  res.render("home");
+// Home route
+app.get("/", async (req, res) => {
+  const jobs = await Job.findAll();
+  res.status(200).render("home", { jobs });
 });
 
-// TODO: Implement a route for 404 pages
+// About route
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+
+// Error 404 route
 app.get("*", (req, res) => {
   res.status(404).render("error");
 });
 
+// Listening for incoming requests
 app.listen(3000, () => {
   console.log(`Server started listening on port ${port}`);
 });

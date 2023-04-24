@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     description TEXT NOT NULL,
     company VARCHAR(60) NOT NULL,
     location VARCHAR(60) NOT NULL,
+    level ENUM('Internship', 'Junior', 'Entry', 'Mid Level', 'Senior') NOT NULL,
+    type ENUM('Freelance', 'Contract', 'Part Time', 'Full Time', 'Remote') NOT NULL,
     salary INT
 );
 
@@ -20,7 +22,8 @@ CREATE TABLE IF NOT EXISTS seekers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(60) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
-    password VARCHAR(60) NOT NULL
+    password VARCHAR(60) NOT NULL,
+    location VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS job_apps (

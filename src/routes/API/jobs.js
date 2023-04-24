@@ -1,5 +1,5 @@
 const express = require("express");
-const Jobs = require("../../models/jobs");
+const Jobs = require("../../models/Job");
 const jobsAPIRouter = express.Router();
 
 jobsAPIRouter.get("/", (req, res) => {

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db/sequelize");
 
-const Employers = sequelize.define(
+const Employer = sequelize.define(
   "employers",
   {
     id: {
@@ -27,4 +27,4 @@ const Employers = sequelize.define(
   { tableName: "employers", timestamps: false }
 );
 
-module.exports = Employers;
+module.exports = Employer;

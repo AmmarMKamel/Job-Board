@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db/sequelize");
 
-const Jobs = sequelize.define(
-  "jobs",
+const Seeker = sequelize.define(
+  "seekers",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -10,15 +10,16 @@ const Jobs = sequelize.define(
       primaryKey: true,
       allowNull: true,
     },
-    title: {
+    name: {
       type: DataTypes.STRING(60),
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
+    email: {
+      type: DataTypes.STRING(60),
       allowNull: false,
+      unique: true,
     },
-    company: {
+    password: {
       type: DataTypes.STRING(60),
       allowNull: false,
     },
@@ -26,11 +27,8 @@ const Jobs = sequelize.define(
       type: DataTypes.STRING(60),
       allowNull: false,
     },
-    salary: {
-      type: DataTypes.INTEGER,
-    },
   },
-  { tableName: "jobs", timestamps: false }
+  { tableName: "seekers", timestamps: false }
 );
 
-module.exports = Jobs;
+module.exports = Seeker;
