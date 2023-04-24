@@ -1,30 +1,44 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const Seeker = require("../models/Seeker");
 const Employer = require("../models/Employer");
 const LoginRoute = express.Router();
+
+async function auth(req, res, next) {
+  const dbModel =
+    req.url.split("/")[1].charAt(0).toUpperCase() +
+    req.url.split("/")[1].slice(1);
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await eval(dbModel).findOne({ where: { email } });
+
+  if (!user) {
+    res.status(401).json({ error: "Invalid username or password" });
+    return;
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  if (!isPasswordCorrect) {
+    res.status(401).json({ error: "Invalid username or password" });
+    return;
+  }
+  req.user = user;
+  next();
+}
 
 LoginRoute.get("/", async (req, res) => {
   res.status(200).render("login");
 });
 
-LoginRoute.post("/seeker", async (req, res) => {
-  const seeker = await Seeker.findOne({
-    where: {
-      email: req.body.email,
-      password: req.body.password,
-    },
-  });
-  res.status(200).redirect(`/seeker/${seeker.id}`);
+// Login as a jobseeker
+LoginRoute.post("/seeker", auth, async (req, res) => {
+  res.status(200).redirect(`/seeker/${req.user.id}`);
 });
 
-LoginRoute.post("/employer", async (req, res) => {
-  const employer = await Employer.findOne({
-    where: {
-      email: req.body.email,
-      password: req.body.password,
-    },
-  });
-  res.status(200).redirect(`/employer/${employer.id}`);
+// Login as an employer
+LoginRoute.post("/employer", auth, async (req, res) => {
+  res.status(200).redirect(`/employer/${req.user.id}`);
 });
 
 module.exports = LoginRoute;
