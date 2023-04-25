@@ -12,6 +12,7 @@ const JobRoute = require("./src/routes/job");
 const EmployerRoute = require("./src/routes/employer");
 const SeekerRoute = require("./src/routes/seeker");
 const Job = require("./src/models/Job");
+const JobAppsRoute = require("./src/routes/jobApps");
 
 // API route
 const APIRouter = require("./src/routes/API/main");
@@ -44,6 +45,7 @@ app.use("/job", JobRoute);
 app.use("/jobs", JobListingsRoute);
 app.use("/employer", EmployerRoute);
 app.use("/seeker", SeekerRoute);
+app.use("/jobApps", JobAppsRoute);
 
 // Home route
 app.get("/", async (req, res) => {

@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS jobs (
     location VARCHAR(60) NOT NULL,
     level ENUM('Internship', 'Junior', 'Entry', 'Mid Level', 'Senior') NOT NULL,
     type ENUM('Freelance', 'Contract', 'Part Time', 'Full Time', 'Remote') NOT NULL,
-    salary INT
+    employer_id INT NOT NULL,
+    salary INT,
+    FOREIGN KEY (employer_id) REFERENCES employers(id)
 );
 
 CREATE TABLE IF NOT EXISTS employers (
@@ -28,7 +30,7 @@ CREATE TABLE IF NOT EXISTS seekers (
 
 CREATE TABLE IF NOT EXISTS job_apps (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    job_id NOT NULL INT,
+    job_id NOT NULL INT UNIQUE,
     applicant_id NOT NULL INT,
     FOREIGN KEY (job_id) REFERENCES jobs(id),
     FOREIGN KEY (applicant_id) REFERENCES seekers(id)
