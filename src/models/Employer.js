@@ -7,7 +7,6 @@ const Employer = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
       allowNull: true,
     },
     name: {

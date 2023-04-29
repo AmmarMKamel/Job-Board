@@ -2,20 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const Seeker = require("../models/Seeker");
 const Employer = require("../models/Employer");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const LoginRoute = express.Router();
-const LogoutRoute = express.Router();
-
-app.use(cookieParser());
-app.use(
-  session({
-    secret: "sign cookie",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 3600000 },
-  })
-);
 
 async function auth(req, res, next) {
   const dbModel =
@@ -54,13 +41,6 @@ LoginRoute.post("/seeker", auth, async (req, res) => {
 LoginRoute.post("/employer", auth, async (req, res) => {
   req.session.user = req.user;
   res.status(200).redirect(`/employer/${req.user.id}`);
-});
-
-// logout user
-LogoutRoute.post("/", async (req, res) => {
-  req.session.destroy();
-  res.clearCookie("connect.sid");
-  res.status(200).redirect("/");
 });
 
 module.exports = LoginRoute;

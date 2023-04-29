@@ -35,3 +35,12 @@ CREATE TABLE IF NOT EXISTS job_apps (
     FOREIGN KEY (job_id) REFERENCES jobs(id),
     FOREIGN KEY (applicant_id) REFERENCES seekers(id)
 );
+
+CREATE TABLE IF NOT EXISTS sessions (
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT NOT NULL,
+    session_id VARCHAR(225) NOT NULL,
+    created_at TIMESTAMP DEFAULT
+    CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+)

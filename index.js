@@ -3,10 +3,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 // Pages routes
 const RegisterRoute = require("./src/routes/register");
 const LoginRoute = require("./src/routes/login");
+const LogoutRoute = require("./src/routes/logout");
 const JobListingsRoute = require("./src/routes/jobListings");
 const JobRoute = require("./src/routes/job");
 const EmployerRoute = require("./src/routes/employer");
@@ -46,6 +49,16 @@ app.use("/jobs", JobListingsRoute);
 app.use("/employer", EmployerRoute);
 app.use("/seeker", SeekerRoute);
 app.use("/jobApps", JobAppsRoute);
+
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "sign cookie",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 3600000 },
+  })
+);
 
 // Home route
 app.get("/", async (req, res) => {
