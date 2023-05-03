@@ -33,6 +33,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="#editProfile">Edit Profile</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#logout" id="logout">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -135,5 +138,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const logoutButton = document.getElementById("logout");
+
+    logoutButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        // Make a post request to the /logout route
+        fetch("/logout", {
+            method: "post",
+        })
+            .then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    // Redirect the user to the home page
+                    window.location.href = "/";
+                } else {
+                    console.error("Error logging out.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error logging out:", error);
+            });
+    });
+</script>
 </body>
 </html>
