@@ -4,6 +4,7 @@ const Job = require("../models/Job");
 const Employer = require("../models/Employer");
 const JobApplication = require("../models/JobApplication");
 
+// View job details
 JobRoute.get("/:id", async (req, res) => {
   const job = await Job.findByPk(req.params.id);
   res.status(200).render("job-details", { job });
@@ -26,20 +27,29 @@ JobRoute.post("/:id", async (req, res) => {
     .catch((err) => res.status(500).json(err.message));
 });
 
-// Edit a job
-JobRoute.patch("/jobs/:id", async (req, res) => {
-  const job = await Job.findByPk(req.params.id);
-  job.title = req.body.title;
-  job.description = req.body.description;
-  job.location = req.body.location;
-  job.company = req.body.company;
-  job.level = req.body.level;
-  job.type = req.body.type;
-  job.salary = req.body.salary;
-  job
-    .save()
-    .then(() => res.status(200).redirect(`/employers/${job.employer_id}`))
-    .catch((err) => res.status(500).json(err.message));
+// Edit job info
+JobRoute.post("/edit/:id", async (req, res) => {
+  try {
+    const job = await Job.findByPk(req.params.id);
+    const { title, description, company, location, level, type, salary } =
+      req.body;
+    await Job.update(
+      {
+        title,
+        description,
+        company,
+        location,
+        level,
+        type,
+        salary,
+      },
+      { where: { id: req.params.id } }
+    );
+    res.redirect(`/employer/${job.employer_id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
 });
 
 // Delete a job

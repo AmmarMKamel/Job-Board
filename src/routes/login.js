@@ -4,29 +4,7 @@ const LoginRoute = express.Router();
 const Employer = require("../models/Employer");
 const Seeker = require("../models/Seeker");
 
-// Create a middleware function that checks if the user is logged in
-// const isLoggedIn = (req, res, next) => {
-//   const dbModel =
-//     req.url.split("/")[1].charAt(0).toUpperCase() +
-//     req.url.split("/")[1].slice(1);
-//   // Parse the cookies
-//   const cookies = cookieParser(req);
-//
-//   // Get the session id from the cookies
-//   const sessionId = cookies.session;
-//
-//   // Check if there is a session in the database with the same session id
-//   const session = expressMysqlSession.getSessionById(req, sessionId);
-//
-//   // If there is a session, the user is already logged in, so redirect to the /user route
-//   if (session) {
-//     res.redirect(`/${dbModel}/${session.user.id}`);
-//     return;
-//   }
-//   // No session, so log in normally
-//   next();
-// };
-
+// Authentication middleware
 async function auth(req, res, next) {
   const dbModel =
     req.url.split("/")[1].charAt(0).toUpperCase() +
@@ -50,6 +28,7 @@ async function auth(req, res, next) {
   next();
 }
 
+// Login page
 LoginRoute.get("/", async (req, res) => {
   if (req.cookies.session_id) {
     const user = req.session.user;

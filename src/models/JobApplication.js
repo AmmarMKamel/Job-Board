@@ -27,4 +27,6 @@ const JobApplication = sequelize.define(
 JobApplication.belongsTo(Job, { foreignKey: "job_id" });
 JobApplication.belongsTo(Seeker, { foreignKey: "applicant_id" });
 
+JobApplication.sync({ alter: true });
+
 module.exports = JobApplication;

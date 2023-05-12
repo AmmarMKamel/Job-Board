@@ -1,9 +1,8 @@
 const express = require("express");
 const JobAppsRoute = express.Router();
 const JobApplication = require("../models/JobApplication");
-const Job = require("../models/Job");
-const Seeker = require("../models/Seeker");
 
+// Apply for a job
 JobAppsRoute.post("/add/:seekerID/:jobID", async (req, res) => {
   const { seekerID, jobID } = req.params;
   JobApplication.create({
@@ -14,10 +13,7 @@ JobAppsRoute.post("/add/:seekerID/:jobID", async (req, res) => {
     .catch((err) => res.status(500).json(err.message));
 });
 
-JobAppsRoute.post("/");
-
-JobAppsRoute.patch("/");
-
+// Delete a job application
 JobAppsRoute.post("/delete/:seekerID/:jobID", async (req, res) => {
   const { seekerID, jobID } = req.params;
   JobApplication.destroy({

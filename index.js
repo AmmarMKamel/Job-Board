@@ -20,7 +20,7 @@ const JobAppsRoute = require("./src/routes/jobApps");
 const LogoutRoute = require("./src/routes/logout");
 
 // API route
-const APIRouter = require("./src/routes/API/main");
+const APIRouter = require("./src/routes/api");
 
 // Importing DB model middleware function
 const { HandleDBModel } = require("./src/helpers/HandleDBModel");
@@ -72,27 +72,6 @@ app.use(
     },
   })
 );
-
-// Configure the cookie parser middleware
-// app.use(cookieParser());
-
-// Configure the Express session middleware
-// const sessionStore = new expressSession({
-//   secret: "my-secret-key",
-//   resave: false,
-//   saveUninitialized: false,
-//   store: new MySQLStore({
-//     host: "localhost",
-//     port: 3306,
-//     user: "root",
-//     password: "",
-//     database: "job_board",
-//     table: "sessions",
-//   }),
-// });
-//
-// // Create a new session table
-// app.use(sessionStore);
 
 // Routes
 app.use("/api", APIRouter);

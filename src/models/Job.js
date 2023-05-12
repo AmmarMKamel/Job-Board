@@ -60,4 +60,6 @@ const Job = sequelize.define(
 
 Job.belongsTo(Employer, { foreignKey: "employer_id" });
 
+Job.sync({ alter: true });
+
 module.exports = Job;

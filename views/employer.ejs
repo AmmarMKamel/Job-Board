@@ -53,7 +53,8 @@
             <th>Level</th>
             <th>Type</th>
             <th>Salary</th>
-            <th>Action</th>
+            <th>Removal</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -70,7 +71,69 @@
                     <button type="submit" class="btn btn-danger">Remove</button>
                 </form>
             </td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editJobModal<%= job.id %>">Edit</button>
+                <button type="button" class="btn btn-secondary" id="view-applicants-btn" data-job-id="<%= job.id %>">View Applicants</button>
+            </td>
         </tr>
+        <div class="modal fade" id="editJobModal<%= job.id %>" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel<%= job.id %>" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editJobModalLabel<%= job.id %>">Edit Job</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action=<%= `/job/edit/${job.id}` %>>
+                            <div class="form-group">
+                                <label for="jobtitle">Job Title:</label>
+                                <input type="text" class="form-control" id="jobtitle" placeholder="Enter job title" name="title" value="<%= job.title %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea class="form-control" id="description" placeholder="Enter job description" name="description"><%= job.description %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company:</label>
+                                <input type="text" class="form-control" id="company" placeholder="Enter company name" name="company" value="<%= job.company %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location:</label>
+                                <input type="text" class="form-control" id="location" placeholder="Enter job location" name="location" value="<%= job.location %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="level">Level:</label>
+                                <select class="form-control" id="level" name="level">
+                                    <option value="Internship" <%= job.level === 'Internship' ? 'selected' : '' %>>Internship</option>
+                                    <option value="Entry" <%= job.level === 'Entry' ? 'selected' : '' %>>Entry</option>
+                                    <option value="Junior" <%= job.level === 'Junior' ? 'selected' : '' %>>Junior</option>
+                                    <option value="Mid Level" <%= job.level === 'Mid Level' ? 'selected' : '' %>>Mid Level</option>
+                                    <option value="Senior" <%= job.level === 'Senior' ? 'selected' : '' %>>Senior</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="type">Type:</label>
+                                <select class="form-control" id="type" name="type">
+                                    <option value="Full Time" <%= job.type === 'Full Time' ? 'selected' : '' %>>Full Time</option>
+                                    <option value="Part Time" <%= job.type === 'Part Time' ? 'selected' : '' %>>Part Time</option>
+                                    <option value="Remote" <%= job.type === 'Remote' ? 'selected' : '' %>>Remote</option>
+                                    <option value="Freelance" <%= job.type === 'Freelance' ? 'selected' : '' %>>Freelance</option>
+                                    <option value="Contract" <%= job.type === 'Contract' ? 'selected' : '' %>>Contract</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="salary">Salary:</label>
+                                <input type="text" class="form-control" id="salary" placeholder="Enter job salary" name="salary" value="<%= job.salary %>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal-container"></div>
         <% }) %>
         </tbody>
     </table>
@@ -168,6 +231,21 @@
             .catch((error) => {
                 console.error("Error logging out:", error);
             });
+    });
+</script>
+<script>
+    const viewApplicantsBtn = document.getElementById('view-applicants-btn');
+    const modalContainer = document.getElementById('modal-container');
+    viewApplicantsBtn.addEventListener('click', () => {
+        const jobId = viewApplicantsBtn.dataset.jobId;
+        modalContainer.innerHTML = '<p>Loading applicants...</p>';
+        fetch(`/employer/job/applicants/${jobId}`)
+            .then(response => response.text())
+            .then(html => {
+                modalContainer.innerHTML = html;
+                $('#view-applicants-modal').modal('show');
+            })
+            .catch(error => console.error(error));
     });
 </script>
 </body>

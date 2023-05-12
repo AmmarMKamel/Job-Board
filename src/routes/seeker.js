@@ -5,6 +5,7 @@ const Seeker = require("../models/Seeker");
 const Job = require("../models/Job");
 const JobApplication = require("../models/JobApplication");
 
+// Seeker dashboard
 SeekerRoute.get("/:id", async (req, res) => {
   const seeker = await Seeker.findByPk(req.params.id);
   const jobs = await Job.findAll();
@@ -25,6 +26,7 @@ SeekerRoute.get("/:id", async (req, res) => {
   });
 });
 
+// Edit seeker's info
 SeekerRoute.post("/edit/:id", async (req, res) => {
   const seeker = await Seeker.findByPk(req.params.id);
   const { name, email, password, location } = req.body;
@@ -39,9 +41,5 @@ SeekerRoute.post("/edit/:id", async (req, res) => {
   );
   res.status(200).redirect(`/seeker/${seeker.id}`);
 });
-
-SeekerRoute.patch("/");
-
-SeekerRoute.delete("/");
 
 module.exports = SeekerRoute;

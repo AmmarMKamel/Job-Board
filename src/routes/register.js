@@ -4,6 +4,7 @@ const Seeker = require("../models/Seeker");
 const Employer = require("../models/Employer");
 const RegisterRoute = express.Router();
 
+// Password hashing middleware
 function hashPassword(req, res, next) {
   const password = req.body.password;
   const salt = bcrypt.genSaltSync(10);
@@ -11,18 +12,19 @@ function hashPassword(req, res, next) {
   next();
 }
 
+// Registeration page
 RegisterRoute.get("/", (req, res) => {
   res.status(200).render("register");
 });
 
-// Add new jobseeker
+// Register as a job seeker
 RegisterRoute.post("/seeker", hashPassword, (req, res) => {
   Seeker.create({ ...req.body })
     .then(() => res.status(200).redirect("/login"))
     .catch((err) => res.status(500).json(err.message));
 });
 
-// Add new employer
+// Register as an employer
 RegisterRoute.post("/employer", hashPassword, (req, res) => {
   Employer.create({ ...req.body })
     .then(() => res.status(200).redirect("/login"))
