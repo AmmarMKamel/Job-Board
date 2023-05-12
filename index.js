@@ -24,6 +24,7 @@ const APIRouter = require("./src/routes/api");
 
 // Importing DB model middleware function
 const { HandleDBModel } = require("./src/helpers/HandleDBModel");
+const { Op } = require("sequelize");
 
 // Initializing express
 const app = express();
@@ -78,7 +79,7 @@ app.use("/api", APIRouter);
 app.use("/register", RegisterRoute);
 app.use("/login", LoginRoute);
 app.use("/job", JobRoute);
-app.use("/jobs", JobListingsRoute);
+app.use("/", JobListingsRoute);
 app.use("/employer", EmployerRoute);
 app.use("/seeker", SeekerRoute);
 app.use("/jobApps", JobAppsRoute);
