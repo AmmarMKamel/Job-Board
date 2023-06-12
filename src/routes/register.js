@@ -14,7 +14,11 @@ function hashPassword(req, res, next) {
 
 // Registeration page
 RegisterRoute.get("/", (req, res) => {
-  res.status(200).render("register");
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
+
+  res.status(200).render("register", { isLogged });
 });
 
 // Register as a job seeker

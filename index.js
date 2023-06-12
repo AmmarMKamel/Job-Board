@@ -87,13 +87,21 @@ app.use("/logout", LogoutRoute);
 
 // Home route
 app.get("/", async (req, res) => {
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
+
   const jobs = await Job.findAll();
-  res.status(200).render("home", { jobs });
+  res.status(200).render("home", { jobs, isLogged });
 });
 
 // About route
 app.get("/about", (req, res) => {
-  res.render("about");
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
+
+  res.render("about", { isLogged });
 });
 
 // Error 404 route

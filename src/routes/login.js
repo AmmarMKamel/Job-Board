@@ -31,6 +31,7 @@ async function auth(req, res, next) {
 // Login page
 LoginRoute.get("/", async (req, res) => {
   if (req.cookies.session_id) {
+    var isLogged = true;
     const user = req.session.user;
     const employer = await Employer.findOne({ where: { email: user.email } });
     if (employer) {
@@ -43,7 +44,7 @@ LoginRoute.get("/", async (req, res) => {
       return;
     }
   }
-  res.status(200).render("login");
+  res.status(200).render("login", { isLogged });
 });
 
 // Login as a jobseeker

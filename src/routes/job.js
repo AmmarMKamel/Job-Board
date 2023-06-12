@@ -6,8 +6,12 @@ const JobApplication = require("../models/JobApplication");
 
 // View job details
 JobRoute.get("/:id", async (req, res) => {
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
+
   const job = await Job.findByPk(req.params.id);
-  res.status(200).render("job-details", { job });
+  res.status(200).render("job-details", { job, isLogged });
 });
 
 // Add a new job

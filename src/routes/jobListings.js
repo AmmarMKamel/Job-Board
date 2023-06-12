@@ -4,12 +4,20 @@ const Job = require("../models/Job");
 const { Op } = require("sequelize");
 
 JobListingsRoute.get("/jobs", async (req, res) => {
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
+
   const jobs = await Job.findAll();
-  res.status(200).render("job-listings", { jobs });
+  res.status(200).render("job-listings", { jobs, isLogged });
 });
 
 JobListingsRoute.get("/jobs/search", async (req, res) => {
   const { q, location, level, type } = req.query;
+
+  if (req.cookies.session_id) {
+    var isLogged = true;
+  }
 
   // Define the search criteria using Sequelize operators
   const where = {
@@ -34,7 +42,7 @@ JobListingsRoute.get("/jobs/search", async (req, res) => {
   try {
     // Find the matching jobs using Sequelize
     const jobs = await Job.findAll({ where });
-    res.status(200).render("job-listings", { jobs });
+    res.status(200).render("job-listings", { jobs, isLogged });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while searching for jobs.");
