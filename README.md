@@ -10,7 +10,7 @@ This is a job board project built with Node.js. It allows users to post jobs, an
 To get started, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/job-board.git
+git clone https://github.com/AmmarMKamel/Job-Board.git
 cd job-board
 npm install
 ```
